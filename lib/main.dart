@@ -3,22 +3,30 @@ import 'package:flutter_application_4/screens/filieres.dart';
 import 'package:flutter_application_4/screens/social.dart';
 import 'package:flutter_application_4/screens/vie.dart';
 import 'package:flutter_application_4/screens/condition.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_application_4/screens/menu_page.dart'; // Importez le fichier de la nouvelle page
-import 'package:carousel_slider/carousel_slider.dart'; // Importez le package carousel_slider
+import 'package:flutter_application_4/screens/localisation.dart';
+import 'package:flutter_application_4/screens/ThemeNotifier.dart';
+import 'package:flutter_application_4/screens/settings_screen.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
-void main() => runApp(MonApp());
+void main() {
+  runApp(
+    ChangeNotifierProvider<ThemeNotifier>(
+      create: (_) => ThemeNotifier(ThemeData.dark()),
+      child: MonApp(),
+    ),
+  );
+}
 
 class MonApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Burkina Institute of Technology',
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.grey[900],
-        primaryColor: Colors.blue[900],
-      ),
+      theme: themeNotifier.getTheme(),
       home: MaHomePage(),
     );
   }
@@ -34,8 +42,9 @@ class _MaHomePageState extends State<MaHomePage> {
 
   static List<Widget> _widgetOptions = <Widget>[
     PageService(),
-    MenuPage(), // Utilisez la nouvelle page ici
-    Text('Connexion'),
+    MapScreen(),
+    SettingsScreen(),
+  
   ];
 
   void _onItemTapped(int index) {
@@ -63,12 +72,12 @@ class _MaHomePageState extends State<MaHomePage> {
             label: 'Services',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: 'localisation',
+            icon: Icon(Icons.location_pin),
+            label: 'Localisation',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.link),
-            label: 'Connexion',
+            icon: Icon(Icons.settings),
+            label: 'Paramètres',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -124,7 +133,7 @@ class PageService extends StatelessWidget {
                     height: 200.0,
                     enlargeCenterPage: true,
                     autoPlay: true,
-                    aspectRatio: 16/9,
+                    aspectRatio: 16 / 9,
                     autoPlayCurve: Curves.fastOutSlowIn,
                     enableInfiniteScroll: true,
                     autoPlayAnimationDuration: Duration(milliseconds: 800),
@@ -136,6 +145,7 @@ class PageService extends StatelessWidget {
                     'assets/condi.jpg',
                     'assets/campus.jpg',
                     'assets/social.jpg',
+                    // 'assets/bit.jpg',
                   ].map((i) {
                     return Builder(
                       builder: (BuildContext context) {
@@ -154,7 +164,10 @@ class PageService extends StatelessWidget {
                 SizedBox(height: 16.0),
                 Text(
                   'Bienvenue à Burkina Institute of Technology',
-                  style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 8.0),
                 Text(
@@ -172,7 +185,8 @@ class PageService extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => FiliereDescriptionScreen()),
+              MaterialPageRoute(
+                  builder: (context) => FiliereDescriptionScreen()),
             );
           },
         ),
@@ -211,7 +225,7 @@ class PageService extends StatelessWidget {
         ),
         _buildCard(
           context: context,
-          imageUrl: 'assets/filiere.jpg',
+          imageUrl: 'assets/info.jpg',
           title: 'Cliquez ici pour plus d\'infos',
           onTap: () async {
             _launchURL('https://www.bit.bf');
@@ -245,7 +259,7 @@ class PageService extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 8.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
-                  child: Image.network(
+                  child: Image.asset(
                     imageUrl,
                     width: 70,
                     height: 70,

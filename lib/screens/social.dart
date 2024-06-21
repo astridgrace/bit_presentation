@@ -3,6 +3,9 @@ import 'package:flutter_application_4/screens/female.dart';
 import 'package:flutter_application_4/screens/stage.dart';
 import 'package:flutter_application_4/screens/accelerator.dart';
 import 'package:flutter_application_4/screens/workshop.dart';
+import 'package:flutter_application_4/screens/localisation.dart';
+import 'package:flutter_application_4/screens/settings_screen.dart';
+import 'package:flutter_application_4/main.dart';
 
 class SocialScreen extends StatefulWidget {
   @override
@@ -16,29 +19,53 @@ class _SocialScreenState extends State<SocialScreen> {
     setState(() {
       _selectedIndex = index;
     });
+
+    // Add navigation logic here based on the selected index
+    switch (index) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PageService()),
+        );
+        break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MapScreen()),
+        );
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SettingsScreen()),
+        );
+        break;
+
+      default:
+        break;
+    }
   }
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-  title: Row(
-    children: [
-      Image.network(
-        'assets/bit.jpg', 
-        height: 30, 
-        width: 30, 
-        fit: BoxFit.contain, 
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/bit.jpg',
+              height: 30,
+              width: 30,
+              fit: BoxFit.contain,
+            ),
+            SizedBox(width: 10),
+            Text(
+              'Activités extrascolaires',
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
+        ),
       ),
-      SizedBox(width: 10), 
-      Text(
-        'Activités extrascolaires',
-        style: TextStyle(fontSize: 20), 
-      ),
-    ],
-  ),
-),
       body: ListView(
         children: <Widget>[
           Card(
@@ -54,7 +81,7 @@ class _SocialScreenState extends State<SocialScreen> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: Image.asset(
-                      'assets/bitimg.jpg',
+                      'assets/bit2.jpg',
                       width: double.infinity,
                       height: 200,
                       fit: BoxFit.cover,
@@ -79,7 +106,7 @@ class _SocialScreenState extends State<SocialScreen> {
           ),
           _buildCard(
             context: context,
-            imageUrl: 'assets/filiere.jpg',
+            imageUrl: 'assets/femalee.jpg',
             title: 'Female empowerment',
             onTap: () {
               Navigator.push(
@@ -90,7 +117,7 @@ class _SocialScreenState extends State<SocialScreen> {
           ),
           _buildCard(
             context: context,
-            imageUrl: 'assets/condi.jpg',
+            imageUrl: 'assets/ac.jpg',
             title: 'Accelerator',
             onTap: () {
               Navigator.push(
@@ -101,7 +128,7 @@ class _SocialScreenState extends State<SocialScreen> {
           ),
           _buildCard(
             context: context,
-            imageUrl: 'assets/campus.jpg',
+            imageUrl: 'assets/works.jpg',
             title: 'Workshops',
             onTap: () {
               Navigator.push(
@@ -112,7 +139,7 @@ class _SocialScreenState extends State<SocialScreen> {
           ),
           _buildCard(
             context: context,
-            imageUrl: 'assets/campus.jpg',
+            imageUrl: 'assets/intership.jpg',
             title: 'Stages',
             onTap: () {
               Navigator.push(
@@ -129,8 +156,10 @@ class _SocialScreenState extends State<SocialScreen> {
         unselectedItemColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Services'),
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Localisation'),
-          BottomNavigationBarItem(icon: Icon(Icons.link), label: 'Connexion'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.location_pin), label: 'Localisation'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: 'Paramètres'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

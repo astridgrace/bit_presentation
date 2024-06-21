@@ -1,41 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/screens/master.dart';
 import 'package:flutter_application_4/screens/bachelor.dart';
+import 'package:flutter_application_4/screens/localisation.dart';
+import 'package:flutter_application_4/screens/settings_screen.dart';
+import 'package:flutter_application_4/main.dart';
 
-class inforScreen extends StatefulWidget {
+class InforScreen extends StatefulWidget {
   @override
-  _inforScreenState createState() => _inforScreenState();
+  _InforScreenState createState() => _InforScreenState();
 }
 
-class _inforScreenState extends State<inforScreen> {
+class _InforScreenState extends State<InforScreen> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+
+    // Add navigation logic here based on the selected index
+    switch (index) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PageService()),
+        );
+        break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MapScreen ()),
+        );
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SettingsScreen()),
+        );
+        break;
+      
+      default:
+        
+        break;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-  title: Row(
-    children: [
-      Image.network(
-        'assets/bit.jpg', 
-        height: 30, 
-        width: 30, 
-        fit: BoxFit.contain, 
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/infor.jpg',
+              height: 30,
+              width: 30,
+              fit: BoxFit.contain,
+            ),
+            SizedBox(width: 10),
+            Text(
+              'Filière Informatique',
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
+        ),
       ),
-      SizedBox(width: 10), 
-      Text(
-        'filière Informatique',
-        style: TextStyle(fontSize: 20), 
-      ),
-    ],
-  ),
-),
       body: ListView(
         children: <Widget>[
           Card(
@@ -51,7 +80,7 @@ class _inforScreenState extends State<inforScreen> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: Image.asset(
-                      'assets/bitimg.jpg',
+                      'assets/CS1.jpg',
                       width: double.infinity,
                       height: 200,
                       fit: BoxFit.cover,
@@ -85,6 +114,7 @@ class _inforScreenState extends State<inforScreen> {
               );
             },
           ),
+          
           _buildCard(
             context: context,
             imageUrl: 'assets/condi.jpg',
@@ -104,11 +134,13 @@ class _inforScreenState extends State<inforScreen> {
         unselectedItemColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Services'),
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Localisation'),
-          BottomNavigationBarItem(icon: Icon(Icons.link), label: 'Connexion'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.location_pin), label: 'Localisation'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: 'Paramètres'),
         ],
         currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        
       ),
     );
   }

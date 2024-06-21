@@ -1,22 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/screens/settings_screen.dart';
+import 'package:flutter_application_4/main.dart';
+import 'package:flutter_application_4/screens/localisation.dart';
 
 class WorkshopScreen extends StatelessWidget {
+  void _onItemTapped(BuildContext context, int index) {
+    // Add navigation logic here based on the selected index
+    switch (index) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PageService()),
+        );
+        break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MapScreen()),
+        );
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SettingsScreen()),
+        );
+        break;
+      default:
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Row(
           children: [
-            Image.network(
-              'assets/bit.jpg', 
-              height: 30, 
-              width: 30, 
-              fit: BoxFit.contain, 
+            Image.asset(
+              'assets/bit.jpg',
+              height: 30,
+              width: 30,
+              fit: BoxFit.contain,
             ),
-            SizedBox(width: 10), 
+            SizedBox(width: 10),
             Text(
               'Workshop',
-              style: TextStyle(fontSize: 20), 
+              style: TextStyle(fontSize: 20),
             ),
           ],
         ),
@@ -31,7 +60,7 @@ class WorkshopScreen extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
                 child: Image.asset(
-                  'assets/condi.jpg', // Chemin de votre image
+                  'assets/works.jpg', // Chemin de votre image
                   height: 200.0,
                   fit: BoxFit.cover,
                 ),
@@ -95,10 +124,13 @@ class WorkshopScreen extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 4, 20, 44),
         selectedItemColor: Colors.pink,
         unselectedItemColor: Colors.white,
+        onTap: (index) => _onItemTapped(context, index),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Services'),
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Localisation'),
-          BottomNavigationBarItem(icon: Icon(Icons.link), label: 'Connexion'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.location_pin), label: 'Localisation'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: 'Paramètres'),
         ],
       ),
     );

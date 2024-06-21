@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_4/screens/informatique.dart';
 import 'package:flutter_application_4/screens/electrique.dart';
 import 'package:flutter_application_4/screens/mecanique.dart';
+import 'package:flutter_application_4/screens/localisation.dart';
+import 'package:flutter_application_4/screens/settings_screen.dart';
+import 'package:flutter_application_4/main.dart';
 
 class FiliereDescriptionScreen extends StatefulWidget {
   @override
@@ -9,34 +12,59 @@ class FiliereDescriptionScreen extends StatefulWidget {
 }
 
 class _FiliereDescriptionScreenState extends State<FiliereDescriptionScreen> {
-  int _selectedIndex = 0; // Initialisation de selectedIndex
+  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+
+    // Add navigation logic here based on the selected index
+    switch (index) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PageService()),
+        );
+        break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MapScreen ()),
+        );
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SettingsScreen()),
+        );
+        break;
+      
+      default:
+        break;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-  title: Row(
-    children: [
-      Image.network(
-        'assets/bit.jpg', 
-        height: 30, 
-        width: 30, 
-        fit: BoxFit.contain, 
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/bit.jpg',
+              height: 30,
+              width: 30,
+              fit: BoxFit.contain,
+            ),
+            SizedBox(width: 10),
+            Text(
+              'Filières',
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
+        ),
       ),
-      SizedBox(width: 10), 
-      Text(
-        'Filières',
-        style: TextStyle(fontSize: 20), 
-      ),
-    ],
-  ),
-),
       body: ListView(
         children: <Widget>[
           Card(
@@ -52,7 +80,7 @@ class _FiliereDescriptionScreenState extends State<FiliereDescriptionScreen> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: Image.asset(
-                      'assets/bitimg.jpg',
+                      'assets/filiere.jpg',
                       width: double.infinity,
                       height: 200,
                       fit: BoxFit.cover,
@@ -68,7 +96,7 @@ class _FiliereDescriptionScreenState extends State<FiliereDescriptionScreen> {
                   ),
                   SizedBox(height: 8.0),
                   Text(
-                    'Le Burkina Institute of Technology (BIT) est un établissement d`\'enseignement supérieur au Burkina Faso, offrant une formation de qualité dans les domaines de la technologie et de l`\'ingénierie. Il propose des filières de Génie Informatique, de Génie Mécanique, de Génie Électrique et de Génie Civil. Ces programmes combinent une solide formation théorique avec des compétences pratiques essentielles. Les étudiants bénéficient de laboratoires bien équipés, de projets pratiques et de stages en entreprise pour acquérir une expérience précieuse. En formant des ingénieurs compétents et innovants, le BIT contribue au développement technologique et économique du Burkina Faso.',
+                    'Le Burkina Institute of Technology (BIT) est un établissement d\'enseignement supérieur au Burkina Faso, offrant une formation de qualité dans les domaines de la technologie et de l\'ingénierie. Il propose des filières de Génie Informatique, de Génie Mécanique, de Génie Électrique et de Génie Civil. Ces programmes combinent une solide formation théorique avec des compétences pratiques essentielles. Les étudiants bénéficient de laboratoires bien équipés, de projets pratiques et de stages en entreprise pour acquérir une expérience précieuse. En formant des ingénieurs compétents et innovants, le BIT contribue au développement technologique et économique du Burkina Faso.',
                     style: TextStyle(color: Colors.white),
                   ),
                 ],
@@ -77,29 +105,29 @@ class _FiliereDescriptionScreenState extends State<FiliereDescriptionScreen> {
           ),
           _buildCard(
             context: context,
-            imageUrl: 'assets/filiere.jpg',
+            imageUrl: 'assets/CS.jpg',
             title: 'Informatique',
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => inforScreen()),
+                MaterialPageRoute(builder: (context) => InforScreen()),
               );
             },
           ),
           _buildCard(
             context: context,
-            imageUrl: 'assets/condi.jpg',
+            imageUrl: 'assets/EE.jpg',
             title: 'Electrique',
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => elecScreen()),
+                MaterialPageRoute(builder: (context) => ElecScreen()),
               );
             },
           ),
           _buildCard(
             context: context,
-            imageUrl: 'assets/campus.jpg',
+            imageUrl: 'assets/ME.jpg',
             title: 'Mecanique',
             onTap: () {
               Navigator.push(
@@ -116,8 +144,10 @@ class _FiliereDescriptionScreenState extends State<FiliereDescriptionScreen> {
         unselectedItemColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Services'),
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Localisation'),
-          BottomNavigationBarItem(icon: Icon(Icons.link), label: 'Connexion'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.location_pin), label: 'Localisation'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: 'Paramètres'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

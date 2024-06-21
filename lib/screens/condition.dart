@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_application_4/screens/localisation.dart';
+import 'package:flutter_application_4/screens/settings_screen.dart';
+import 'package:flutter_application_4/main.dart';
 class ConditionScreen extends StatefulWidget {
   @override
   _ConditionScreenState createState() => _ConditionScreenState();
@@ -9,11 +11,34 @@ class _ConditionScreenState extends State<ConditionScreen> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    // Ajoutez la logique de navigation ici si nécessaire
+  setState(() {
+    _selectedIndex = index;
+  });
+
+  // Add navigation logic here based on the selected index
+  switch (index) {
+    case 0:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PageService()),
+      );
+      break;
+    case 1:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MapScreen()),
+      );
+      break;
+    case 2:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SettingsScreen()),
+      );
+      break;
+    default:
+      break;
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +46,7 @@ class _ConditionScreenState extends State<ConditionScreen> {
       appBar: AppBar(
         title: Row(
           children: [
-            Image.network(
+            Image.asset(
               'assets/bit.jpg',
               height: 30,
               width: 30,
@@ -39,21 +64,19 @@ class _ConditionScreenState extends State<ConditionScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Image avec bords arrondis
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
                 child: Image.asset(
-                  'assets/condi.jpg', // Remplacez par le chemin de votre image
+                  'assets/cond.jpg',
                   height: 200.0,
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            SizedBox(height: 20), // Espace entre l'image et la zone de texte
-            // Zone de texte
+            SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -75,7 +98,6 @@ class _ConditionScreenState extends State<ConditionScreen> {
                 ],
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -97,7 +119,6 @@ class _ConditionScreenState extends State<ConditionScreen> {
                 ],
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -119,7 +140,6 @@ class _ConditionScreenState extends State<ConditionScreen> {
                 ],
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -150,8 +170,10 @@ class _ConditionScreenState extends State<ConditionScreen> {
         unselectedItemColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Services'),
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Localisation'),
-          BottomNavigationBarItem(icon: Icon(Icons.link), label: 'Connexion'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.location_pin), label: 'Localisation'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: 'Paramètres'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
@@ -159,4 +181,3 @@ class _ConditionScreenState extends State<ConditionScreen> {
     );
   }
 }
-

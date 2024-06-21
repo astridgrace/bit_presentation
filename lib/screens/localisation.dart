@@ -1,51 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_application_4/main.dart';
+
+
 
 void main() {
-  runApp(MyApp());
+  runApp(MonApp());
 }
 
-class MyApp extends StatelessWidget {
+
+class MapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Google Maps Launcher',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return Center(
+      child: ElevatedButton(
+        onPressed: _openMap,
+        child: Text('Afficher la localisation'),
       ),
-      home: MyHomePage(),
     );
   }
-}
 
-class MyHomePage extends StatelessWidget {
-  // Fonction pour ouvrir Google Maps à une localisation spécifique
-  void _launchGoogleMaps() async {
-    // Spécifiez les coordonnées de l'emplacement
-    const double latitude = 48.8566;  // Latitude de Paris
-    const double longitude = 2.3522;  // Longitude de Paris
-    final String googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+  void _openMap() async {
+    // Latitude et longitude du lieu
+    double latitude = 12.3701;
+    double longitude = -1.5247;
 
-    // Vérifiez si l'URL peut être lancée
-    if (await canLaunch(googleMapsUrl)) {
-      await launch(googleMapsUrl);
+    // URL de Google Maps avec les coordonnées
+    String url = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+
+    if (await canLaunch(url)) {
+      await launch(url);
     } else {
-      throw 'Could not launch $googleMapsUrl';
+      throw 'Impossible de lancer $url';
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Google Maps Launcher'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: _launchGoogleMaps,
-          child: Text('Open Google Maps'),
-        ),
-      ),
-    );
   }
 }

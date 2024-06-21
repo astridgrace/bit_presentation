@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/screens/localisation.dart';
+import 'package:flutter_application_4/screens/settings_screen.dart';
+import 'package:flutter_application_4/main.dart';
 
 class AcceleratorScreen extends StatefulWidget {
   @override
@@ -9,10 +12,36 @@ class _AcceleratorScreenState extends State<AcceleratorScreen> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  setState(() {
+    _selectedIndex = index;
+  });
+
+  // Add navigation logic here based on the selected index
+  switch (index) {
+    case 0:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PageService()),
+      );
+      break;
+    case 1:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MapScreen ()),
+      );
+      break;
+    case 2:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SettingsScreen()),
+      );
+      break;
+    
+    default:
+      
+      break;
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +49,7 @@ class _AcceleratorScreenState extends State<AcceleratorScreen> {
       appBar: AppBar(
         title: Row(
           children: [
-            Image.network(
+            Image.asset(
               'assets/bit.jpg',
               height: 30,
               width: 30,
@@ -38,20 +67,18 @@ class _AcceleratorScreenState extends State<AcceleratorScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Image avec bords arrondis
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
                 child: Image.asset(
-                  'assets/condi.jpg', // Remplacez par le chemin de votre image
+                  'assets/acce.jpg',
                   height: 200.0,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            SizedBox(height: 20), // Espace entre l'image et le texte
-            // Texte sans images
+            SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -110,8 +137,8 @@ class _AcceleratorScreenState extends State<AcceleratorScreen> {
         unselectedItemColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Services'),
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'localisation'),
-          BottomNavigationBarItem(icon: Icon(Icons.link), label: 'Connexion'),
+          BottomNavigationBarItem(icon: Icon(Icons.location_pin), label: 'Localisation'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Paramètres'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
